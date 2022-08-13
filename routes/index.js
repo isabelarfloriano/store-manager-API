@@ -1,1 +1,3 @@
-// importará e exportará as rotas
+const productsRoute = require('./productsRoute');
+
+module.exports = { productsRoute };
