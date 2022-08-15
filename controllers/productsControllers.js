@@ -11,8 +11,6 @@ const getById = async (req, res, next) => {
 
   const products = await Products.getById(id);
 
-  console.log('PRODUTOS É ', products.error);
-
   if (products.error) return next(products.error);  
 
   return res.status(200).json(products[0]);
