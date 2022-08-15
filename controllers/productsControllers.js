@@ -9,11 +9,13 @@ const getAll = async (_req, res) => {
 const getById = async (req, res, next) => {
   const { id } = req.params;
 
-  const products = await Products.findById(id);
+  const products = await Products.getById(id);
 
-  if (products.error) return next(products.error);
+  console.log('PRODUTOS É ', products.error);
 
-  return res.status(200).json(products);
+  if (products.error) return next(products.error);  
+
+  return res.status(200).json(products[0]);
 };
 
 module.exports = {
