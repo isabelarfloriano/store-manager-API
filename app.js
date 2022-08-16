@@ -4,6 +4,7 @@ const errorMiddleware = require('./middlewares/error');
 
 const app = express();
 
+app.use(express.json());
 app.use('/products', productsRoute);
 
 app.use(errorMiddleware);
