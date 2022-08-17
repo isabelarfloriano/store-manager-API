@@ -43,7 +43,7 @@ describe('Test the function that lists all products | MODEL', () => {
     Sinon.stub(connection, 'execute').resolves([resultExecute]);
 
     const products = await productsModel.getAll();
-    expect(products).to.be.an('object');
+    expect(products[0]).to.be.an('object');
   })
   it('Objects inside array must contain "id" and "name" properties', async () => {
     const resultExecute = [{
@@ -70,13 +70,10 @@ describe('Test the function that list a product by specific id | MODEL', () => {
 
     const product = await productsModel.getById('1');
     expect(product).to.be.an('object');
-    expect(product[0]).to.include.all.keys('id', 'name');
+    expect(product).to.include.all.keys('id', 'name');
   })
   it('Should return null if id was not found', async () => {
-    const resultExecute = [{
-      "id": 1,
-      "name": "Martelo de Thor",
-    }]
+    const resultExecute = [[]]
     Sinon.stub(connection, 'execute').resolves(resultExecute);
 
     const product = await productsModel.getById('1234');

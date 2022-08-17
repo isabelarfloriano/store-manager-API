@@ -5,7 +5,7 @@ const Sinon = require('sinon');
 const productsModel = require('../../../models/productsModel');
 const productsServices = require('../../../services/productsServices');
 
-describe('Test the function that lists all products', () => {
+describe('Test the function that lists all products | SERVICES', () => {
   afterEach(() => {
     Sinon.restore();
   })
@@ -18,7 +18,7 @@ describe('Test the function that lists all products', () => {
   })
   it('Array must not be empty', async () => {
     const resultExecute = []
-    Sinon.stub(productsModel, 'getAll').resolves([resultExecute]);
+    Sinon.stub(productsModel, 'getAll').resolves(resultExecute);
 
     const products = await productsServices.getAll();
     expect(products).to.be.empty;
@@ -28,7 +28,7 @@ describe('Test the function that lists all products', () => {
       "id": 1,
       "name": "Martelo de Thor",
     }]
-    Sinon.stub(productsModel, 'getAll').resolves([resultExecute]);
+    Sinon.stub(productsModel, 'getAll').resolves(resultExecute);
 
     const products = await productsServices.getAll();
     expect(products).to.be.not.empty;
@@ -38,24 +38,24 @@ describe('Test the function that lists all products', () => {
       "id": 1,
       "name": "Martelo de Thor",
     }]
-    Sinon.stub(productsModel, 'getAll').resolves([resultExecute]);
+    Sinon.stub(productsModel, 'getAll').resolves(resultExecute);
 
     const products = await productsServices.getAll();
-    expect(products).to.be.an('object');
+    expect(products[0]).to.be.an('object');
   })
   it('Objects inside array must contain "id" and "name" properties', async () => {
     const resultExecute = [{
       "id": 1,
       "name": "Martelo de Thor",
     }]
-    Sinon.stub(productsModel, 'getAll').resolves([resultExecute]);
+    Sinon.stub(productsModel, 'getAll').resolves(resultExecute);
 
     const products = await productsServices.getAll();
     expect(products[0]).to.all.keys('name', 'id')
   })
 });
 
-describe('Test the function that list a product by specific id', () => {
+describe('Test the function that list a product by specific id | SERVICES', () => {
   afterEach(() => {
     Sinon.restore();
   })
@@ -67,17 +67,15 @@ describe('Test the function that list a product by specific id', () => {
     Sinon.stub(productsModel, 'getById').resolves(resultExecute);
 
     const product = await productsServices.getById('1');
-    expect(product).to.be.an('object');
+    expect(product[0]).to.be.an('object');
     expect(product[0]).to.include.all.keys('id', 'name');
   })
-  it('Should return null if id was not found', async () => {
-    const resultExecute = [{
-      "id": 1,
-      "name": "Martelo de Thor",
-    }]
+  it('Should return error object if id was not found', async () => {
+    const resultExecute = null;
     Sinon.stub(productsModel, 'getById').resolves(resultExecute);
 
     const product = await productsServices.getById('1234');
-    expect(product).to.be.null;
+    expect(product).to.be.an('object');
+    expect(product.error).to.include.all.keys('code', 'message');
   })
 });

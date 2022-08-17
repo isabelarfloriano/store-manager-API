@@ -24,10 +24,10 @@ describe('Test the function that lists all products | CONTROLLERS', () => {
         "id": 2,
         "name": "Traje de encolhimento",
       }];
-    Sinon.stub(productsServices, 'getAll').resolves([resultExecute]);
+    Sinon.stub(productsServices, 'getAll').resolves(resultExecute);
 
     await productsControllers.getAll(request, response);
-    eexpect(response.json.calledWith([
+    expect(response.json.calledWith([
       {
         "id": 1,
         "name": "Martelo de Thor",
