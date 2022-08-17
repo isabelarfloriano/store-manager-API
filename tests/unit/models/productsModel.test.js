@@ -35,4 +35,24 @@ describe('Test the function that lists all products', () => {
     const products = await productsModel.getAll();
     expect(products).to.be.not.empty;
   })
+  it('Array must contain objects', async () => {
+    const resultExecute = [{
+      "id": 1,
+      "name": "Martelo de Thor",
+    }]
+    Sinon.stub(connection, 'execute').resolves([resultExecute]);
+
+    const products = await productsModel.getAll();
+    expect(products).to.be.an('object');
+  })
+  it('Objects inside array must contain "id" and "name" properties', async () => {
+    const resultExecute = [{
+      "id": 1,
+      "name": "Martelo de Thor",
+    }]
+    Sinon.stub(connection, 'execute').resolves([resultExecute]);
+
+    const products = await productsModel.getAll();
+    expect(products[0]).to.all.keys('name', 'id')
+  })
 });
