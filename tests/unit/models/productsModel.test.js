@@ -80,3 +80,22 @@ describe('Test the function that list a product by specific id | MODEL', () => {
     expect(product).to.be.null;
   })
 });
+
+describe('Test the function that add product to database | MODEL', () => {
+  afterEach(() => {
+    Sinon.restore();
+  })
+  it('Should return an object with correct data', async () => {
+    const resultExecute = [{
+      insertId: 4,
+      "name": "ProdutoX",
+    }]
+    Sinon.stub(connection, 'execute').resolves(resultExecute);
+
+    const product = await productsModel.createProduct({
+      "name": "ProdutoX"
+    });
+    expect(product).to.be.an('object');
+    expect(product).to.include.all.keys('id', 'name');
+  })
+});
