@@ -79,3 +79,22 @@ describe('Test the function that list a product by specific id | SERVICES', () =
     expect(product.error).to.include.all.keys('code', 'message');
   })
 });
+
+describe('Test the function that add product to database | SERVICES', () => {
+  afterEach(() => {
+    Sinon.restore();
+  })
+  it('Should return an object with correct data', async () => {
+    const resultExecute = {
+      "id": 4,
+      "name": "ProdutoX",
+    }
+    Sinon.stub(productsModel, 'createProduct').resolves(resultExecute);
+
+    const product = await productsServices.createProduct({
+      "name": "ProdutoX"
+    });
+    expect(product).to.be.an('object');
+    expect(product).to.include.all.keys('id', 'name');
+  })
+});
