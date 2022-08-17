@@ -7,7 +7,7 @@ const productsModel = require('../../../models/productsModel');
 
 // Usando de base a mentoria de revisão bloco 23
 
-describe('Test the function that lists all products', () => {
+describe('Test the function that lists all products | MODEL', () => {
   afterEach(() => {
     Sinon.restore();
   })
@@ -57,7 +57,7 @@ describe('Test the function that lists all products', () => {
   })
 });
 
-describe('Test the function that list a product by specific id', () => {
+describe('Test the function that list a product by specific id | MODEL', () => {
   afterEach(() => {
     Sinon.restore();
   })
