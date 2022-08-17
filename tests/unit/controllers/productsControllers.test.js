@@ -5,7 +5,7 @@ const Sinon = require('sinon');
 const productsServices = require('../../../services/productsServices');
 const productsControllers = require('../../../controllers/productsControllers');
 
-describe('Test the function that lists all products', () => {
+describe('Test the function that lists all products | CONTROLLERS', () => {
   afterEach(() => {
     Sinon.restore();
   })
@@ -38,7 +38,7 @@ describe('Test the function that lists all products', () => {
       }]
     )).to.be.equal(true);
   })
-  it('Should response with status 200 just once', async () => {
+  it('Should response with status 200 just once | CONTROLLERS', async () => {
     const request = {};
     const response = {};
 
