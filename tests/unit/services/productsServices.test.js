@@ -54,3 +54,30 @@ describe('Test the function that lists all products', () => {
     expect(products[0]).to.all.keys('name', 'id')
   })
 });
+
+describe('Test the function that list a product by specific id', () => {
+  afterEach(() => {
+    Sinon.restore();
+  })
+  it('Should return an object with correct data', async () => {
+    const resultExecute = [{
+      "id": 1,
+      "name": "Martelo de Thor",
+    }]
+    Sinon.stub(productsModel, 'getById').resolves(resultExecute);
+
+    const product = await productsServices.getById('1');
+    expect(product).to.be.an('object');
+    expect(product[0]).to.include.all.keys('id', 'name');
+  })
+  it('Should return null if id was not found', async () => {
+    const resultExecute = [{
+      "id": 1,
+      "name": "Martelo de Thor",
+    }]
+    Sinon.stub(productsModel, 'getById').resolves(resultExecute);
+
+    const product = await productsServices.getById('1234');
+    expect(product).to.be.null;
+  })
+});
