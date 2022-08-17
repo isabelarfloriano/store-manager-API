@@ -64,17 +64,16 @@ describe('Test the function that list a product by specific id | CONTROLLERS', (
   it('Should return an object with correct data', async () => {
     const request = { params: '1' };
     const response = {};
-
+    const next = Sinon.stub().resolves();
     response.status = Sinon.stub().returns(response);
     response.json = Sinon.stub().returns();
-    const resultExecute = {
+    const resultExecute = [{
       "id": 1,
       "name": "Martelo de Thor",
-      }
+      }]
     Sinon.stub(productsServices, 'getById').resolves(resultExecute);
 
-    const test = await productsControllers.getById(request, response);
-    console.log('ATENÇÃO', test)
+    const test = await productsControllers.getById(request, response, next);
     expect(response.json.calledWith(
       {
         "id": 1,
@@ -82,7 +81,7 @@ describe('Test the function that list a product by specific id | CONTROLLERS', (
       }
     )).to.be.equal(true);
   })
-  it('Should response with status 201 just once', async () => {
+  it('Should response with status 200 just once', async () => {
     const request = { params: '1' };
     const response = {};
 
@@ -95,13 +94,13 @@ describe('Test the function that list a product by specific id | CONTROLLERS', (
     Sinon.stub(productsServices, 'getById').resolves(resultExecute);
 
     await productsControllers.getById(request, response);
-    expect(response.status.calledWith(201)).to.be.equal(true);
+    expect(response.status.calledWith(200)).to.be.equal(true);
     expect(response.status.calledOnce).to.be.true;
   })
-  it('Should return error object if id was not found', async () => {
+  it('Checks if the error parameter is passed correctly', async () => {
     const request = { params: '1234' };
     const response = {};
-
+    const next = Sinon.stub().resolves();
     response.status = Sinon.stub().returns(response);
     response.json = Sinon.stub().returns();
     const resultExecute = {
@@ -112,26 +111,7 @@ describe('Test the function that list a product by specific id | CONTROLLERS', (
     };
     Sinon.stub(productsServices, 'getById').resolves(resultExecute);
 
-    await productsControllers.getById(request, response);
-    expect(product).to.be.an('object');
-    expect(product.error).to.include.all.keys('message');
-  })
-  it('In case of error should response with status 404', async () => {
-    const request = { params: '1234' };
-    const response = {};
-
-    response.status = Sinon.stub().returns(response);
-    response.json = Sinon.stub().returns();
-    const resultExecute = {
-      error: {
-        code: 'notFound',
-        message: 'Product not found',
-      },
-    };
-    Sinon.stub(productsServices, 'getById').resolves(resultExecute);
-
-    await productsControllers.getById(request, response);
-    expect(response.status.calledWith(404)).to.be.equal(true);
-    expect(response.status.calledOnce).to.be.true;
+    await productsControllers.getById(request, response, next);
+    expect(next.calledWith(resultExecute.error)).to.be.equal(true);
   })
 });
