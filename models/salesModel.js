@@ -2,7 +2,7 @@ const connection = require('./connection');
 
 const addSale = async (sales) => {
   const [sold] = await connection.execute(
-    'INSERT INTO StoreManager.sales (id, date) VALUES ();',
+    'INSERT INTO StoreManager.sales VALUES ();',
   );
 
   sales.forEach(async (sale) => {
@@ -15,7 +15,7 @@ const addSale = async (sales) => {
     );    
   });
 
-  return sold;
+  return { id: sold.insertId, itemsSold: sales };
 };
 
 module.exports = {
