@@ -2,12 +2,9 @@ const Sales = require('../models/salesModel');
 const Products = require('../models/productsModel');
 
 const addSale = async (sales) => {
-  const products = await Products.getAll();
-  const haveTheProduct = sales.filter((sale) => products.filter(
-    (prod) => prod.productId === sale.productId,
-  ));
+  const haveTheProduct = sales.filter((sale) => Products.getById(sale.productId));
 
-  if (haveTheProduct.length > 0) {
+  if (!haveTheProduct.length > 0) {
     return {
       error: {
         code: 'notFound',
