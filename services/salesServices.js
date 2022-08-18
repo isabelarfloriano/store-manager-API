@@ -2,9 +2,13 @@ const Sales = require('../models/salesModel');
 const Products = require('../models/productsModel');
 
 const addSale = async (sales) => {
-  const haveTheProduct = sales.filter((sale) => Products.getById(sale.productId));
+  const products = await Products.getAll();
+  console.log('PRODUCTS É', products);
+  console.log('SALES É', sales);
+  const haveTheProduct = sales.every((sale) => products.map((p) => p.id).includes(sale.productId));
+  console.log(haveTheProduct);
 
-  if (!haveTheProduct.length > 0) {
+  if (!haveTheProduct) {
     return {
       error: {
         code: 'notFound',
