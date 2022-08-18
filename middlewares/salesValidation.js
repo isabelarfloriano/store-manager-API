@@ -5,7 +5,7 @@ const salesValidation = (req, res, next) => {
 
   sales.forEach((element) => {
     const { error } = salesSchema.validate(element);
-    console.log('erro salevalidation', error);
+
     if (error) {
       const [code, message] = error.message.split('|');
       return res.status(Number(code)).json({ message });
