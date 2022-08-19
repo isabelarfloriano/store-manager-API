@@ -73,7 +73,7 @@ describe('Test the function that list a product by specific id | CONTROLLERS', (
       }]
     Sinon.stub(productsServices, 'getById').resolves(resultExecute);
 
-    const test = await productsControllers.getById(request, response, next);
+    await productsControllers.getById(request, response, next);
     expect(response.json.calledWith(
       {
         "id": 1,
