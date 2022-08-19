@@ -8,5 +8,6 @@ const salesRoute = express.Router();
 const saleValidate = salesValidation.salesValidation;
 
 salesRoute.post('/', saleValidate, rescue(salesControllers.addSale));
+salesRoute.get('/', rescue(salesControllers.getAll));
 
 module.exports = salesRoute;
