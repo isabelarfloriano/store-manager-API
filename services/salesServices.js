@@ -20,7 +20,23 @@ const addSale = async (sales) => {
 
 const getAll = async () => Sales.getAll();
 
+const getById = async (id) => {
+  const sale = await Sales.getById(id);
+
+  if (!sale) {
+    return {
+      error: {
+        code: 'notFound',
+        message: 'Sale not found',
+      },
+    };
+  }
+
+  return sale;
+};
+
 module.exports = {
   addSale,
   getAll,
+  getById,
 };
