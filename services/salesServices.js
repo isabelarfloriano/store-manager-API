@@ -3,10 +3,7 @@ const Products = require('../models/productsModel');
 
 const addSale = async (sales) => {
   const products = await Products.getAll();
-  console.log('PRODUCTS É', products);
-  console.log('SALES É', sales);
   const haveTheProduct = sales.every((sale) => products.map((p) => p.id).includes(sale.productId));
-  console.log(haveTheProduct);
 
   if (!haveTheProduct) {
     return {
@@ -21,6 +18,9 @@ const addSale = async (sales) => {
   return sold;
 };
 
+const getAll = async () => Sales.getAll();
+
 module.exports = {
   addSale,
+  getAll,
 };
