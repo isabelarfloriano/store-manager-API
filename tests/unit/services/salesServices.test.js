@@ -60,3 +60,29 @@ describe('Test the function that lists all sales | SERVICES', () => {
     expect(sales[0]).to.all.keys('saleId','date', 'productId', 'quantity');
   })
 });
+
+describe('Test the function that list a sale by specific id | SERVICES', () => {
+  afterEach(() => {
+    Sinon.restore();
+  })
+  it('Should return an object with correct data', async () => {
+    const resultExecute = [{
+      "date": "2021-09-09T04:54:29.000Z",
+      "productId": 1,
+      "quantity": 2,
+    }]
+    Sinon.stub(salesModel, 'getById').resolves(resultExecute);
+
+    const sale = await salesServices.getById('1');
+    expect(sale[0]).to.be.an('object');
+    expect(sale[0]).to.include.all.keys('date', 'productId', 'quantity');
+  })
+  it('Should return error object if id was not found', async () => {
+    const resultExecute = null;
+    Sinon.stub(salesModel, 'getById').resolves(resultExecute);
+
+    const sale = await salesServices.getById('1234');
+    expect(sale).to.be.an('object');
+    expect(sale.error).to.include.all.keys('code', 'message');
+  })
+});
