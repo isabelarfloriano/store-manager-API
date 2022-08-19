@@ -15,5 +15,23 @@ describe('Test the function that lists all sales | MODEL', () => {
 
     const sales = await salesModel.getAll();
     expect(sales).to.be.an('array');
-  });
+  })
+  it('Array must not be empty', async () => {
+    const resultExecute = []
+    Sinon.stub(connection, 'execute').resolves([resultExecute]);
+
+    const sales = await salesModel.getAll();
+    expect(sales).to.be.empty;
+  })
+  it('Array must be empty', async () => {
+    const resultExecute = [{
+      "date": "2021-09-09T04:54:29.000Z",
+      "productId": 1,
+      "quantity": 2
+    }]
+    Sinon.stub(connection, 'execute').resolves(resultExecute);
+
+    const sales = await salesModel.getAll();
+    expect(sales).to.be.not.empty;
+  })
 });
