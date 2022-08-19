@@ -10,6 +10,13 @@ const addSale = async (req, res, next) => {
   return res.status(201).json(sale);
 };
 
+const getAll = async (_req, res) => {
+  const sales = await Sales.getAll();
+
+  return res.status(200).json(sales);
+};
+
 module.exports = {
   addSale,
+  getAll,
 };
