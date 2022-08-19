@@ -25,8 +25,9 @@ describe('Test the function that lists all sales | SERVICES', () => {
   })
   it('Array must be empty', async () => {
     const resultExecute = [{
-      "date": "2021-09-09T04:54:29.000Z",
-      "productId": 1,
+      "saleId": 1,
+      "date": "2021-09-09T04:54:54.000Z",
+      "productId": 2,
       "quantity": 2,
     }]
     Sinon.stub(salesModel, 'getAll').resolves(resultExecute);
@@ -36,8 +37,9 @@ describe('Test the function that lists all sales | SERVICES', () => {
   })
   it('Array must contain objects', async () => {
     const resultExecute = [{
-      "date": "2021-09-09T04:54:29.000Z",
-      "productId": 1,
+      "saleId": 1,
+      "date": "2021-09-09T04:54:54.000Z",
+      "productId": 2,
       "quantity": 2,
     }]
     Sinon.stub(salesModel, 'getAll').resolves(resultExecute);
@@ -47,13 +49,14 @@ describe('Test the function that lists all sales | SERVICES', () => {
   })
   it('Objects inside array must contain right properties', async () => {
     const resultExecute = [{
-      "date": "2021-09-09T04:54:29.000Z",
-      "productId": 1,
+      "saleId": 1,
+      "date": "2021-09-09T04:54:54.000Z",
+      "productId": 2,
       "quantity": 2,
     }]
     Sinon.stub(salesModel, 'getAll').resolves(resultExecute);
 
     const sales = await salesServices.getAll();
-    expect(sales[0]).to.all.keys('date', 'productId', 'quantity');
+    expect(sales[0]).to.all.keys('saleId','date', 'productId', 'quantity');
   })
 });
