@@ -86,11 +86,11 @@ describe('Test the function that list a Sale by specific id | CONTROLLERS', () =
 
     await salesControllers.getById(request, response, next);
     expect(response.json.calledWith(
-      {
+      [{
         "date": "2021-09-09T04:54:29.000Z",
         "productId": 1,
         "quantity": 2,
-      }
+      }]
     )).to.be.equal(true);
   })
   it('Should response with status 200 just once', async () => {
