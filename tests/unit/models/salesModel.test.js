@@ -45,7 +45,7 @@ describe('Test the function that lists all sales | MODEL', () => {
     const sales = await salesModel.getAll();
     expect(sales[0]).to.be.an('object');
   })
-  it('Objects inside array must contain "id" and "name" properties', async () => {
+  it('Objects inside array must contain right properties', async () => {
     const resultExecute = [{
       "date": "2021-09-09T04:54:29.000Z",
       "productId": 1,
