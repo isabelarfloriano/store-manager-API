@@ -85,3 +85,40 @@ describe('Test the function that list a sale by specific id | MODEL', () => {
     expect(sale).to.be.null;
   })
 });
+
+describe('Test the function that add a sale to database | MODEL', () => {
+  afterEach(() => {
+    Sinon.restore();
+  })
+  it('Should return an object with correct data', async () => {
+    const resultExecute = [{
+      "id": 3,
+      "itemsSold": [
+        {
+          "productId": 1,
+          "quantity": 1
+        },
+        {
+          "productId": 2,
+          "quantity": 5
+        }
+      ]
+    }]
+    Sinon.stub(connection, 'execute').resolves(resultExecute);
+
+    const sale = await salesModel.addSale([
+      {
+        "productId": 1,
+        "quantity": 1
+      },
+      {
+        "productId": 2,
+        "quantity": 5
+      }
+    ]);
+    expect(sale).to.be.an('object');
+    expect(sale).to.include.all.keys('id', 'itemsSold');
+    expect(sale.itemsSold).to.be.an('array');
+    expect(sale.itemsSold[0]).to.be.not.empty;
+  })
+});
