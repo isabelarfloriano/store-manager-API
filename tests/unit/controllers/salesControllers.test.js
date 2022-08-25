@@ -128,3 +128,85 @@ describe('Test the function that list a Sale by specific id | CONTROLLERS', () =
     expect(next.calledWith(resultExecute.error)).to.be.equal(true);
   })
 });
+
+describe('Test the function that add a sale to database | CONTROLLERS', () => {
+  afterEach(() => {
+    Sinon.restore();
+  })
+  it('Should return an object with correct data in case of success', async () => {
+    const request = {
+      body: [{
+        "productId": 1,
+        "quantity": 1
+      },
+      {
+      "productId": 2,
+        "quantity": 5
+      }
+    ]};
+    const response = {};
+
+    response.status = Sinon.stub().returns(response);
+    response.json = Sinon.stub().returns();
+    const resultExecute = {
+      "id": 3,
+      "itemsSold": [
+        {
+          "productId": 1,
+          "quantity": 1
+        },
+        {
+          "productId": 2,
+          "quantity": 5
+        }
+      ]
+    }
+    Sinon.stub(salesServices, 'addSale').resolves(resultExecute);
+
+    const sale = await salesControllers.addSale(request, response);
+    expect(response.json.calledWith(
+      {
+        "id": 3,
+        "itemsSold": [
+          {
+            "productId": 1,
+            "quantity": 1
+          },
+          {
+            "productId": 2,
+            "quantity": 5
+          }
+        ]
+      }
+    )).to.be.equal(true);
+    expect(response.status.calledWith(201)).to.be.equal(true);
+    expect(response.status.calledOnce).to.be.true;
+  })
+  it('Should return a error object if the product was not found', async () => {
+    const request = {
+      body: [{
+        "productId": 1,
+        "quantity": 1
+      },
+      {
+        "productId": 3,
+        "quantity": 5
+      }
+      ]
+    };
+    const response = {};
+    const next = Sinon.stub().resolves();
+    response.status = Sinon.stub().returns(response);
+    response.json = Sinon.stub().returns();
+    const resultExecute = {
+      error: {
+        code: 'notFound',
+        message: 'Product not found',
+      },
+    }
+    Sinon.stub(salesServices, 'addSale').resolves(resultExecute);
+
+    await salesControllers.addSale(request, response, next);
+    expect(next.calledWith(resultExecute.error)).to.be.equal(true);
+  })
+});
