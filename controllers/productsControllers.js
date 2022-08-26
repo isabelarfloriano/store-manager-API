@@ -39,9 +39,9 @@ const deleteProduct = async (req, res, next) => {
 
   const product = await Products.deleteProduct(id);
 
-  if (!product) return res.status(204);
+  if (product) return next(product.error);
 
-  return next(product.error);
+  return res.status(204).end();
 };
 
 module.exports = {
