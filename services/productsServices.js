@@ -50,10 +50,13 @@ const deleteProduct = async (id) => {
   return Products.deleteProduct(id);
 }; 
 
+const searchProduct = async (search) => Products.searchProduct(search);
+
 module.exports = {
   getAll,
   getById,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProduct,
 };
