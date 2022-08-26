@@ -10,5 +10,6 @@ const nameValidate = productsValidation.nameValidation;
 productsRoute.get('/', rescue(productsControllers.getAll));
 productsRoute.get('/:id', rescue(productsControllers.getById));
 productsRoute.post('/', nameValidate, rescue(productsControllers.createProduct));
+productsRoute.put('/:id', nameValidate, rescue(productsControllers.updateProduct));
 
 module.exports = productsRoute;
