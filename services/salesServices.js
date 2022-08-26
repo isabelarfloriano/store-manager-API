@@ -35,8 +35,24 @@ const getById = async (id) => {
   return sale;
 };
 
+const deleteSale = async (id) => {
+  const sale = await Sales.getById(id);
+
+  if (!sale) {
+    return {
+      error: {
+        code: 'notFound',
+        message: 'Sale not found',
+      },
+    };
+  }
+
+  return Sales.deleteSale(id);
+};
+
 module.exports = {
   addSale,
   getAll,
   getById,
+  deleteSale,
 };
