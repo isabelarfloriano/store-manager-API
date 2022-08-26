@@ -10,5 +10,6 @@ const saleValidate = salesValidation.salesValidation;
 salesRoute.post('/', saleValidate, rescue(salesControllers.addSale));
 salesRoute.get('/', rescue(salesControllers.getAll));
 salesRoute.get('/:id', rescue(salesControllers.getById));
+salesRoute.delete('/:id', rescue(salesControllers.deleteSale));
 
 module.exports = salesRoute;
