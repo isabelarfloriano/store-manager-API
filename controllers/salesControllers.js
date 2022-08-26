@@ -29,11 +29,11 @@ const getById = async (req, res, next) => {
 const deleteSale = async (req, res, next) => {
   const { id } = req.params;
 
-  const sale = await Sales.getById(id);
+  const sale = await Sales.deleteSale(id);
 
   if (sale) return next(sale.error);
 
-  return res.status(200).end();
+  return res.status(204).end();
 };
 
 module.exports = {
