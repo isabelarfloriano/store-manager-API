@@ -50,9 +50,21 @@ const deleteSale = async (id) => {
   return Sales.deleteSale(id);
 };
 
+const updateSale = async (id, sales) => {
+  const sold = await Sales.getById(id);
+  if (!sold) return { error: { code: 'notFound', message: 'Sale not found' } };
+
+  const products = await Products.getAll();
+  const haveTheProduct = sales.every((sale) => products.map((p) => p.id).includes(sale.productId));
+  if (!haveTheProduct) return { error: { code: 'notFound', message: 'Product not found' } };
+  
+  return Sales.updateSale(id, sales);
+};
+
 module.exports = {
   addSale,
   getAll,
   getById,
   deleteSale,
+  updateSale,
 };
