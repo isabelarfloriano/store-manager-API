@@ -7,11 +7,11 @@ const productsRoute = express.Router();
 
 const nameValidate = productsValidation.nameValidation;
 
+productsRoute.get('/search', rescue(productsControllers.searchProduct));
 productsRoute.get('/', rescue(productsControllers.getAll));
 productsRoute.get('/:id', rescue(productsControllers.getById));
 productsRoute.post('/', nameValidate, rescue(productsControllers.createProduct));
 productsRoute.put('/:id', nameValidate, rescue(productsControllers.updateProduct));
 productsRoute.delete('/:id', rescue(productsControllers.deleteProduct));
-productsRoute.get('/search', rescue(productsControllers.searchProduct));
 
 module.exports = productsRoute;

@@ -47,6 +47,7 @@ const deleteProduct = async (req, res, next) => {
 const searchProduct = async (req, res) => {
   const { q } = req.query;
   const product = await Products.searchProduct(q);
+  // console.log(product);
 
   return res.status(200).json(product);
 };
